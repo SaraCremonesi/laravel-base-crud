@@ -6,4 +6,5 @@
   <li>Price: {{ $shoe->price }}$</li>
   <li>Description: {{ $shoe->description }}</li>
 </ul>
-<a href="{{route('shoes.index')}}">Indietro</a>
+<a href="{{route('shoes.index')}}">Back</a>
+<a href="{{route('shoes.edit', $shoe)}}">Edit</a>

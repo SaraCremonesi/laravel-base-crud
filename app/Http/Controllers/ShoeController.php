@@ -16,7 +16,7 @@ class ShoeController extends Controller
     {
         $shoes = Shoe::all();
 
-        return view('shoes.index', compact('shoes'));
+        return view('shoes.index', compact('shoe'));
     }
 
     /**
@@ -37,13 +37,7 @@ class ShoeController extends Controller
      */
     public function store(Request $request)
     {
-      $request->validate([
-        'brand' => 'required|max:255',
-        'model' => 'required|max:255',
-        'color' => 'required|max:50',
-        'size' => 'required|numeric|between:0,99.9',
-        'price' => 'required|numeric|between:0,999.99'
-      ]);
+      $request->validate($this->getValidationRules());
 
       $data = $request->all();
 
@@ -52,7 +46,7 @@ class ShoeController extends Controller
       $saved = $shoe->save();
 
       if($saved) {
-        $new_shoe = Shoe::oderBy('id', 'desc')->first();
+        $new_shoe = Shoe::orderBy('id', 'desc')->first();
         return redirect()->route('shoes.show', $new_shoe);
       }
     }
@@ -74,9 +68,9 @@ class ShoeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Shoe $shoe)
     {
-      //
+      return view('shoes.edit', compact('shoe'));
     }
 
     /**
@@ -86,9 +80,15 @@ class ShoeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Shoe $shoe)
     {
-        //
+      $request->validate($this->getValidationRules());
+      $data = $request->all();
+      $updated = $shoe->update($data);
+
+      if ($updated) {
+        return redirect()->route('shoes.show', $shoe);
+      }
     }
 
     /**
@@ -97,8 +97,22 @@ class ShoeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Shoe $shoe)
     {
-        //
+      $shoe->delete();
+
+      return redirect()->route('shoes.index');
+
+    }
+
+    // Aggiungo una funzione protetta creata da me per la validazione
+    protected function getValidationRules() {
+      return [
+        'brand' => 'required|max:255',
+        'model' => 'required|max:255',
+        'color' => 'required|max:50',
+        'size' => 'required|numeric|between:0,99.9',
+        'price' => 'required|numeric|between:0,999.99'
+      ];
     }
 }

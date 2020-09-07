@@ -9,6 +9,13 @@
         </div>
       </li>
     </ul>
+    <div>
+      <form action="route{{ 'shoes.destroy', $shoe }}" method="post">
+        @csrf
+        @method('DELETE');
+        <input type="submit" value="Delete">
+      </form>
+    </div>
   @endforeach
 
 <a href="{{ route('shoes.create') }}">Create your shoe</a>
