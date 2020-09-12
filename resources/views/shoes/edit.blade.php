@@ -44,8 +44,7 @@
       <label>Description</label>
       <textarea name="description" rows="8" cols="80">{{ old('description') ? old('description') : $shoe->description }}</textarea>
     </div>
-
-
+    
     <div>
       <input type="submit" value="Edit">
     </div>
