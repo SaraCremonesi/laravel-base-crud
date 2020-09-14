@@ -80,7 +80,7 @@ class ShoeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Shoe $shoe)
+    public function update(Request $request, Shoe $shoe)
     {
       $request->validate($this->getValidationRules());
       $data = $request->all();
