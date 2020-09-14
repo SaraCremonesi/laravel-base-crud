@@ -10,9 +10,9 @@
       </li>
     </ul>
     <div>
-      <form action="route{{ 'shoes.destroy', $shoe }}" method="post">
+      <form action="{{ route('shoes.destroy', $shoe) }}" method="post">
         @csrf
-        @method('DELETE');
+        @method('DELETE')
         <input type="submit" value="Delete">
       </form>
     </div>

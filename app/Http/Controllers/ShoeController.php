@@ -16,7 +16,7 @@ class ShoeController extends Controller
     {
         $shoes = Shoe::all();
 
-        return view('shoes.index', compact('shoe'));
+        return view('shoes.index', compact('shoes'));
     }
 
     /**
@@ -85,6 +85,7 @@ class ShoeController extends Controller
       $request->validate($this->getValidationRules());
       $data = $request->all();
       $updated = $shoe->update($data);
+      $shoe->save();
 
       if ($updated) {
         return redirect()->route('shoes.show', $shoe);
